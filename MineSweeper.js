@@ -60,37 +60,44 @@ function printBoard() {
 
 // 获取用户输入
 function getInput() {
-  rl.question('请输入你的操作 (reveal x y 或 flag x y): ', (input) => {
+  // 用户输入作为 input 参数传给后面的回调函数。
+  rl.question('Please enter your operation (reveal x y or flag x y): ', (input) => {
+    // split 函数是一个字符串方法，用于将字符串根据指定的分隔符拆分成数组
+    // 这就是所谓的解构赋值 它允许我们将数组的元素直接赋值给不同的变量。
     let [action, x, y] = input.split(' ');
+
+    // 这两行代码将输入的 x 和 y 字符串转换成整数
     x = parseInt(x);
     y = parseInt(y);
 
     if (action === 'reveal') {
-      if (x >= 0 && x < boardSize && y >= 0 && y < boardSize) {
-        board[x][y].unveal = true;
-        if (board[x][y].hasMine) {
-          gameStatus = 'LOST';
+      if (x >= 0 && x < boardSize && y >= 0 && y < boardSize) { // 检查输入是否在范围之内
+        board[x][y].unveal = true; // 符合条件则 unveal 为 true
+        if (board[x][y].hasMine) { // 检测是否有地雷
+          gameStatus = 'LOST'; // 有地雷则游戏状态为 LOST
         } else {
-          cellHasNoMine++;
+          cellHasNoMine += 1; // 如果没有地雷则 cellHasNoMine 加 1
         }
       }
-    } else if (action === 'flag') {
+    } else if (action === 'flag') { // 检查输入是否为标记
       if (x >= 0 && x < boardSize && y >= 0 && y < boardSize) {
-        board[x][y].hasFlag = true;
+        board[x][y].hasFlag = true; // 符合条件则 flag 为 true
       }
     }
   
-    printBoard();
+  printBoard(); // 更新游戏版
 
-    if (gameStatus === 'LOST') {
-      console.log('你输了！');
-      rl.close();
-    } else if (cellHasNoMine === emptyCell) {
-      console.log('你赢了！');
-      rl.close();
-    } else {
-      getInput();
-    }
+  // 检测游戏是否失败
+  if (gameStatus === 'LOST') {
+    console.log('你输了！');
+    rl.close(); // 关闭 readline.Interface 实例 结束接收用户输入。
+  } else if (cellHasNoMine === emptyCell) { // 检测游戏是否胜利
+    console.log('你赢了！');
+    rl.close();
+  } else {
+    getInput(); // 游戏继续 调用 getInput 函数
+  }
+
   });
 }
 
