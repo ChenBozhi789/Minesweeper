@@ -60,7 +60,7 @@ function printBoard() {
 
 // get user input
 function getInput() {
-  rl.question('Please enter (reveal x y 或 flag x y): ', (input) => {
+  rl.question('Please enter (reveal x y OR flag x y): ', (input) => {
     let [action, x, y] = input.split(' ');
     x = parseInt(x);
     y = parseInt(y);
