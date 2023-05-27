@@ -1,34 +1,34 @@
 // This is develop branch
 
-const readline = require('readline'); // readline 用户在命令行中获取用户输入 内置 require 导入模块
+const readline = require('readline'); // readline user fetches user input on the command line built-in require imports modules
 
-// 创建 readline.Interface 实例：这个实例会监听用户的输入并处理它。
+// Create a readline.Interface instance: this instance will listen for user input and process it.
 const rl = readline.createInterface({
-  input: process.stdin, // 从 process.stdin（标准输入）获取输入
-  output: process.stdout // 将输出发送到 process.stdout（标准输出）
+  input: process.stdin, // Get input from process.stdin (standard input)
+  output: process.stdout // Send output to process.stdout (standard output)
 });
 
-// 声明游戏状态全局变量
-let board = []; // 建立一个 “大框架”
-let boardSize = 3; // 设置游戏版大小
+// Declare game state global variables
+let board = []; // Build a "big frame"
+let boardSize = 3; // Set game board size
 let gameStatus = '';
 let emptyCell = 0;
 let mineCell = 0;
 let cellHasNoMine = 0;
 
-// 创建 boardSize × boardSize 游戏版 每个单元格都有三个属性表示状态
+// Create boardSize × boardSize game version Each cell has three properties to represent the state
 function createBoard() {
   for (let i = 0; i < boardSize; i++) { // Control the number of lines in the game version
-    board[i] = []; // 每行创建一个空数组
+    board[i] = []; // Create an empty array per row
     for (let j = 0; j < boardSize; j++) {  // Control the number of game board columns
       board[i][j] = { // Indicates the state of each cell
         unveal: false,
         hasFlag: false,
         hasMine: Math.random() > 0.8 ? true : false
-        // 如果生成的随机数大于 0.8，那么 hasMine 为 true，否则为 false
+        // hasMine is true if the generated random number is greater than 0.8, otherwise it is false
       };
 
-      // 如果单元格有地雷则 emptyCell 加 1
+      // emptyCell plus 1 if the cell has mines
       if (board[i][j].hasMine) {
         mineCell += 1;
       } else {
@@ -37,18 +37,18 @@ function createBoard() {
 
     }
   }
-  console.log('空白单元格的数量为：' + emptyCell + ' 地雷单元格的数量为：' + mineCell);
+  console.log('Number of Empty cell: ' + emptyCell + ' Number of Mine cell: ' + mineCell);
 }
 
-// 绘制游戏版
+// Daw game
 function printBoard() {
   for (let i = 0; i < boardSize; i++) {
-    let row = ''; // 储存当前行的状态
-    for (let j = 0; j < boardSize; j++) { // 遍历当前行的每一个单元格
+    let row = ''; // store the state of the current row
+    for (let j = 0; j < boardSize; j++) { // Iterate through each cell in the current row
       if (board[i][j].hasFlag) {
         row += ' F '; 
       } else if (board[i][j].unveal) { 
-        // 如果当前单元格没有标记，但已被揭示，则会检查当前单元格是否有地雷
+        // If the current cell is not marked, but has been revealed, the current cell is checked for mines
         row += board[i][j].hasMine ? ' M ' : ' E ';
       } else {
         row += ' ? ';
@@ -58,9 +58,9 @@ function printBoard() {
   }
 }
 
-// 获取用户输入
+// get user input
 function getInput() {
-  rl.question('请输入你的操作 (reveal x y 或 flag x y): ', (input) => {
+  rl.question('Please enter (reveal x y 或 flag x y): ', (input) => {
     let [action, x, y] = input.split(' ');
     x = parseInt(x);
     y = parseInt(y);
