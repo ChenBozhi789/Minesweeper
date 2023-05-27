@@ -83,10 +83,10 @@ function getInput() {
     printBoard();
 
     if (gameStatus === 'LOST') {
-      console.log('你输了！');
+      console.log('FAIL');
       rl.close();
     } else if (cellHasNoMine === emptyCell) {
-      console.log('你赢了！');
+      console.log('WIN');
       rl.close();
     } else {
       getInput();
