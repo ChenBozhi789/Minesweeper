@@ -1,13 +1,3 @@
-/*
-• 该程序必须生成一个3 x 3 格的游戏板。
-• 程序必须在棋盘上随机放置地雷。
-• 程序必须允许用户选择要揭开的单元格。
-• 程序必须指出选定的单元格是否包含地雷。
-• 程序必须提供有关所选单元格附近地雷数量的线索。
-• 该程序必须允许用户标记他们怀疑包含地雷的单元格。
-• 程序必须在所有非地雷单元格都被揭开后结束游戏。
-*/
-
 // This is develop branch
 
 const readline = require('readline'); // readline user fetches user input on the command line built-in require imports modules
